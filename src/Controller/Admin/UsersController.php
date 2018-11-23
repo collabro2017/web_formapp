@@ -13,6 +13,13 @@ use App\Controller\AppController;
 class UsersController extends AppController
 {
 
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Auth->allow(['logout']);
+        $this->viewBuilder()->setLayout('admin');
+    }
+
     /**
      * Index method
      *
@@ -20,6 +27,7 @@ class UsersController extends AppController
      */
     public function index()
     {
+        $this->set('title', 'All Users');
         $users = $this->paginate($this->Users);
 
         $this->set(compact('users'));
@@ -58,8 +66,10 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $sites = $this->Users->Sites->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'sites'));
+        $this->set('title', __('Add User'));
+        $sites = $this->Users->Sites->find('list', ['limit' => 200, 'keyField' => 'site_id', 'valueField' => 'site_name']);
+        $roles = ['admin' => __('Admin'), 'supervisor' => __('Supervisor'), 'leadhand' => __('Lead Hand')];
+        $this->set(compact('user', 'sites', 'roles'));
     }
 
     /**
@@ -105,5 +115,34 @@ class UsersController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Login method
+     *
+     * @return \Cake\Http\Response|null Redirects on successful login
+     */
+    public function login()
+    {
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error(__('Invalid username or password, try again'));
+        }
+        $this->viewBuilder()->setLayout('login');
+        $this->set('title', __('User Login'));
+    }
+
+    /**
+     * Logout method
+     *
+     * @return \Cake\Http\Response|null Redirects on successful logout to login page
+     */
+    public function logout()
+    {
+        return $this->redirect($this->Auth->logout());
     }
 }
