@@ -12,6 +12,11 @@ use App\Controller\AppController;
  */
 class SitesController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->viewBuilder()->setLayout('admin');
+    }
 
     /**
      * Index method
@@ -21,7 +26,7 @@ class SitesController extends AppController
     public function index()
     {
         $sites = $this->paginate($this->Sites);
-
+        $this->set('title', __('Site Lists'));
         $this->set(compact('sites'));
     }
 
@@ -58,9 +63,10 @@ class SitesController extends AppController
             }
             $this->Flash->error(__('The site could not be saved. Please, try again.'));
         }
-        $employees = $this->Sites->Employees->find('list', ['limit' => 200]);
-        $equipments = $this->Sites->Equipments->find('list', ['limit' => 200]);
-        $users = $this->Sites->Users->find('list', ['limit' => 200]);
+        $this->set('title', __('Add Site'));
+        $employees = $this->Sites->Employees->find('list', ['limit' => 200, 'keyField' => 'employee_id', 'valueField' => 'full_name']);
+        $equipments = $this->Sites->Equipments->find('list', ['limit' => 200, 'keyField' => 'equipment_id', 'valueField' => 'serial_plate_number']);
+        $users = $this->Sites->Users->find('list', ['limit' => 200, 'keyField' => 'user_id', 'valueField' => 'username']);
         $this->set(compact('site', 'employees', 'equipments', 'users'));
     }
 
@@ -85,9 +91,10 @@ class SitesController extends AppController
             }
             $this->Flash->error(__('The site could not be saved. Please, try again.'));
         }
-        $employees = $this->Sites->Employees->find('list', ['limit' => 200]);
-        $equipments = $this->Sites->Equipments->find('list', ['limit' => 200]);
-        $users = $this->Sites->Users->find('list', ['limit' => 200]);
+        $this->set('title', __('Edit Site'));
+        $employees = $this->Sites->Employees->find('list', ['limit' => 200, 'keyField' => 'employee_id', 'valueField' => 'full_name']);
+        $equipments = $this->Sites->Equipments->find('list', ['limit' => 200, 'keyField' => 'equipment_id', 'valueField' => 'serial_plate_number']);
+        $users = $this->Sites->Users->find('list', ['limit' => 200, 'keyField' => 'user_id', 'valueField' => 'username']);
         $this->set(compact('site', 'employees', 'equipments', 'users'));
     }
 

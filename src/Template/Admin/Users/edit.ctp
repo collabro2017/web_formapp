@@ -1,35 +1,66 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\User $user
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $user->user_id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $user->user_id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Sites'), ['controller' => 'Sites', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Site'), ['controller' => 'Sites', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="users form large-9 medium-8 columns content">
-    <?= $this->Form->create($user) ?>
-    <fieldset>
-        <legend><?= __('Edit User') ?></legend>
-        <?php
-            echo $this->Form->control('username');
-            echo $this->Form->control('email');
-            echo $this->Form->control('password');
-            echo $this->Form->control('role');
-            echo $this->Form->control('sites._ids', ['options' => $sites]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+<div class="card">
+    <?= $this->Form->create($user, ['class' => 'form-horizontal']) ?>
+
+    <?php 
+        $this->Form->setTemplates([
+            'inputContainer' => '<div class="col-12 col-md-9">{{content}}</div>'
+        ]);
+    ?>
+
+    <div class="card-header">
+        <strong class="card-title"><?= $title ?></strong>
+    </div>
+    <div class="card-body card-block">
+
+        <div class="row form-group">
+            <div class="col col-md-3"><label for="username" class="form-control-label"><?= __('Username'); ?></label></div>
+            <?= $this->Form->control('username', ['label' => false, 'class' => 'form-control', 'placeholder' => __('Enter username')]); ?>
+        </div>
+
+        <div class="row form-group">
+            <div class="col col-md-3"><label for="password" class="form-control-label"><?= __('Password'); ?></label></div>
+            <?= $this->Form->control('password', ['label' => false, 'class' => 'form-control', 'placeholder' => __('Enter password'), 'value' => '', 'required' => false]); ?>
+        </div>
+
+        <div class="row form-group">
+            <div class="col col-md-3"><label for="email" class="form-control-label"><?= __('Email'); ?></label></div>
+            <?= $this->Form->control('email', ['label' => false, 'class' => 'form-control', 'placeholder' => __('Enter email')]); ?>
+        </div>
+
+        <div class="row form-group">
+            <div class="col col-md-3"><label for="role" class=" form-control-label"><?= __('Role') ?></label></div>
+            <?= $this->Form->control('role', ['options' => $roles, 'label' => false, 'div' => false, 'data-placeholder' => 'Choose role', 'class' => 'standardSelect', 'tabindex' => '1', 'empty' => true]) ?>
+        </div>
+
+        <div class="row form-group">
+            <div class="col col-md-3"><label for="role" class=" form-control-label"><?= __('User Sites') ?></label></div>
+            <?php 
+                $defaultSites = [];
+                if (!empty($user->sites)) {
+                    foreach ($user->sites as $key => $site) {
+                        $defaultSites[] = $site->site_id;
+                    }
+                }
+            ?>
+            <?= $this->Form->control('sites._ids', ['options' => $sites, 'label' => false, 'div' => false, 'data-placeholder' => 'Choose sites...', 'multiple' => true, 'class' => 'standardSelect', 'tabindex' => '1', 'default' => $defaultSites]) ?>
+        </div>
+        
+    </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary btn-sm">
+            <i class="fa fa-dot-circle-o"></i> Submit
+        </button>
+        <?= $this->Html->link(__('Back'), ['action' => 'index'], ['class' => 'btn btn-danger btn-sm']) ?>
+    </div>
     <?= $this->Form->end() ?>
 </div>
+
+<script>
+    jQuery(document).ready(function() {
+        jQuery(".standardSelect").chosen({
+            disable_search_threshold: 5,
+            no_results_text: "Oops, nothing found!",
+            width: "100%"
+        });
+    });
+</script>

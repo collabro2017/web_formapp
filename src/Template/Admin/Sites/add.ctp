@@ -1,34 +1,64 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Site $site
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Sites'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Employees'), ['controller' => 'Employees', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Employee'), ['controller' => 'Employees', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Equipments'), ['controller' => 'Equipments', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Equipment'), ['controller' => 'Equipments', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="sites form large-9 medium-8 columns content">
-    <?= $this->Form->create($site) ?>
-    <fieldset>
-        <legend><?= __('Add Site') ?></legend>
-        <?php
-            echo $this->Form->control('site_name');
-            echo $this->Form->control('address');
-            echo $this->Form->control('city');
-            echo $this->Form->control('employees._ids', ['options' => $employees]);
-            echo $this->Form->control('equipments._ids', ['options' => $equipments]);
-            echo $this->Form->control('users._ids', ['options' => $users]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+<div class="card">
+    <?= $this->Form->create($site, ['class' => 'form-horizontal']) ?>
+
+    <?php 
+        $this->Form->setTemplates([
+            'inputContainer' => '<div class="col-12 col-md-9">{{content}}</div>'
+        ]);
+    ?>
+
+    <div class="card-header">
+        <strong class="card-title"><?= $title ?></strong>
+    </div>
+    <div class="card-body card-block">
+
+        <div class="row form-group">
+            <div class="col col-md-3"><label for="site_name" class="form-control-label"><?= __('Site Name'); ?></label></div>
+            <?= $this->Form->control('site_name', ['label' => false, 'class' => 'form-control', 'placeholder' => __('Enter site name')]); ?>
+        </div>
+
+        <div class="row form-group">
+            <div class="col col-md-3"><label for="address" class="form-control-label"><?= __('Address'); ?></label></div>
+            <?= $this->Form->control('address', ['label' => false, 'class' => 'form-control', 'placeholder' => __('Enter address')]); ?>
+        </div>
+
+        <div class="row form-group">
+            <div class="col col-md-3"><label for="city" class="form-control-label"><?= __('City'); ?></label></div>
+            <?= $this->Form->control('city', ['label' => false, 'class' => 'form-control', 'placeholder' => __('Enter city')]); ?>
+        </div>
+
+
+        <div class="row form-group">
+            <div class="col col-md-3"><label for="role" class=" form-control-label"><?= __('Site Employees') ?></label></div>
+            <?= $this->Form->control('employees._ids', ['options' => $employees, 'label' => false, 'div' => false, 'data-placeholder' => 'Choose employees...', 'multiple' => true, 'class' => 'standardSelect', 'tabindex' => '1']) ?>
+        </div>
+
+        <div class="row form-group">
+            <div class="col col-md-3"><label for="role" class=" form-control-label"><?= __('Site Equipments') ?></label></div>
+            <?= $this->Form->control('equipments._ids', ['options' => $equipments, 'label' => false, 'div' => false, 'data-placeholder' => 'Choose equipments...', 'multiple' => true, 'class' => 'standardSelect', 'tabindex' => '1']) ?>
+        </div>
+
+        <div class="row form-group">
+            <div class="col col-md-3"><label for="role" class=" form-control-label"><?= __('Site Users') ?></label></div>
+            <?= $this->Form->control('users._ids', ['options' => $users, 'label' => false, 'div' => false, 'data-placeholder' => 'Choose users...', 'multiple' => true, 'class' => 'standardSelect', 'tabindex' => '1']) ?>
+        </div>
+        
+    </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary btn-sm">
+            <i class="fa fa-dot-circle-o"></i> Submit
+        </button>
+        <?= $this->Html->link(__('Back'), ['action' => 'index'], ['class' => 'btn btn-danger btn-sm']) ?>
+    </div>
     <?= $this->Form->end() ?>
 </div>
+
+<script>
+    jQuery(document).ready(function() {
+        jQuery(".standardSelect").chosen({
+            disable_search_threshold: 5,
+            no_results_text: "Oops, nothing found!",
+            width: "100%"
+        });
+    });
+</script>

@@ -41,4 +41,9 @@ class Employee extends Entity
         'modified' => true,
         'sites' => true
     ];
+
+    protected function _getFullName()
+    {
+        return $this->_properties['first_name'] . ' ' . $this->_properties['last_name'];
+    }
 }

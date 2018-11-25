@@ -12,6 +12,11 @@ use App\Controller\AppController;
  */
 class EmployeesController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->viewBuilder()->setLayout('admin');
+    }
 
     /**
      * Index method
@@ -21,7 +26,7 @@ class EmployeesController extends AppController
     public function index()
     {
         $employees = $this->paginate($this->Employees);
-
+        $this->set('title', __('Employees List'));
         $this->set(compact('employees'));
     }
 
@@ -58,7 +63,8 @@ class EmployeesController extends AppController
             }
             $this->Flash->error(__('The employee could not be saved. Please, try again.'));
         }
-        $sites = $this->Employees->Sites->find('list', ['limit' => 200]);
+        $this->set('title', __('Add Employee'));
+        $sites = $this->Employees->Sites->find('list', ['limit' => 200, 'keyField' => 'site_id', 'valueField' => 'site_name']);
         $this->set(compact('employee', 'sites'));
     }
 
@@ -83,7 +89,8 @@ class EmployeesController extends AppController
             }
             $this->Flash->error(__('The employee could not be saved. Please, try again.'));
         }
-        $sites = $this->Employees->Sites->find('list', ['limit' => 200]);
+        $this->set('title', __('Edit Employee'));
+        $sites = $this->Employees->Sites->find('list', ['limit' => 200, 'keyField' => 'site_id', 'valueField' => 'site_name']);
         $this->set(compact('employee', 'sites'));
     }
 

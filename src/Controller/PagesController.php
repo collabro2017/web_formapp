@@ -29,6 +29,12 @@ use Cake\View\Exception\MissingTemplateException;
 class PagesController extends AppController
 {
 
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Auth->allow();
+    }
+
     /**
      * Displays a view
      *
@@ -40,6 +46,7 @@ class PagesController extends AppController
      */
     public function display(...$path)
     {
+        $this->redirect('/admin');
         $count = count($path);
         if (!$count) {
             return $this->redirect('/');

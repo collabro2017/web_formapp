@@ -16,7 +16,7 @@ class UsersController extends AppController
     public function initialize()
     {
         parent::initialize();
-        $this->Auth->allow(['logout']);
+        $this->Auth->allow(['logout', 'login']);
         $this->viewBuilder()->setLayout('admin');
     }
 
@@ -85,7 +85,11 @@ class UsersController extends AppController
             'contain' => ['Sites']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $data = $this->request->getData();
+            if (empty($data['password'])) {
+                unset($data['password']);
+            }
+            $user = $this->Users->patchEntity($user, $data);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
@@ -93,8 +97,10 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $sites = $this->Users->Sites->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'sites'));
+        $this->set('title', __('Add User'));
+        $sites = $this->Users->Sites->find('list', ['limit' => 200, 'keyField' => 'site_id', 'valueField' => 'site_name']);
+        $roles = ['admin' => __('Admin'), 'supervisor' => __('Supervisor'), 'leadhand' => __('Lead Hand')];
+        $this->set(compact('user', 'sites', 'roles'));
     }
 
     /**

@@ -23,7 +23,7 @@
         </div>
 
         <div class="row form-group">
-            <div class="col col-md-3"><label for="email" class="form-control-label"><?= __('Username'); ?></label></div>
+            <div class="col col-md-3"><label for="email" class="form-control-label"><?= __('Email'); ?></label></div>
             <?= $this->Form->control('email', ['label' => false, 'class' => 'form-control', 'placeholder' => __('Enter email')]); ?>
         </div>
 
@@ -50,9 +50,7 @@
         <button type="submit" class="btn btn-primary btn-sm">
             <i class="fa fa-dot-circle-o"></i> Submit
         </button>
-        <button type="reset" class="btn btn-danger btn-sm">
-            <i class="fa fa-ban"></i> Reset
-        </button>
+        <?= $this->Html->link(__('Back'), ['action' => 'index'], ['class' => 'btn btn-danger btn-sm']) ?>
     </div>
     <?= $this->Form->end() ?>
 </div>
