@@ -55,7 +55,9 @@ class EmployeesController extends AppController
     {
         $employee = $this->Employees->newEntity();
         if ($this->request->is('post')) {
-            $employee = $this->Employees->patchEntity($employee, $this->request->getData());
+            $inputs = $this->request->getData();
+            $inputs['hire_date'] = !empty($inputs['hire_date']) ? date('Y-m-d', strtotime($inputs['hire_date'])) : NULL;
+            $employee = $this->Employees->patchEntity($employee, $inputs);
             if ($this->Employees->save($employee)) {
                 $this->Flash->success(__('The employee has been saved.'));
 
@@ -81,7 +83,10 @@ class EmployeesController extends AppController
             'contain' => ['Sites']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $employee = $this->Employees->patchEntity($employee, $this->request->getData());
+            $inputs = $this->request->getData();
+            $inputs['hire_date'] = !empty($inputs['hire_date']) ? date('Y-m-d', strtotime($inputs['hire_date'])) : NULL;
+            $inputs['active'] = !empty($inputs['active']) ? 1 : NULL;
+            $employee = $this->Employees->patchEntity($employee, $inputs);
             if ($this->Employees->save($employee)) {
                 $this->Flash->success(__('The employee has been saved.'));
 

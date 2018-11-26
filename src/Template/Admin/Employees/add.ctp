@@ -1,3 +1,6 @@
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <div class="card">
     <?= $this->Form->create($employee, ['class' => 'form-horizontal']) ?>
 
@@ -14,12 +17,12 @@
 
         <div class="row form-group">
             <div class="col col-md-3"><label for="first_name" class="form-control-label"><?= __('First name'); ?></label></div>
-            <?= $this->Form->control('first_name', ['label' => false, 'class' => 'form-control', 'placeholder' => __('Enter first name')]); ?>
+            <?= $this->Form->control('first_name', ['label' => false, 'class' => 'form-control', 'placeholder' => __('Enter first name'), 'required' => true]); ?>
         </div>
 
         <div class="row form-group">
             <div class="col col-md-3"><label for="last_name" class="form-control-label"><?= __('Last Name'); ?></label></div>
-            <?= $this->Form->control('last_name', ['label' => false, 'class' => 'form-control', 'placeholder' => __('Enter last name')]); ?>
+            <?= $this->Form->control('last_name', ['label' => false, 'class' => 'form-control', 'placeholder' => __('Enter last name'), 'required' => true]); ?>
         </div>
 
         <div class="row form-group">
@@ -34,23 +37,20 @@
 
         <div class="row form-group">
             <div class="col col-md-3"><label for="hire_date" class="form-control-label"><?= __('Hire Date'); ?></label></div>
-            <div class="input-group">
-                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                <?= $this->Form->control('hire_date', ['label' => false, 'class' => 'form-control', 'placeholder' => __('Enter hire date'), 'type' => 'text']); ?>
-            </div>
+            <?= $this->Form->control('hire_date', ['label' => false, 'class' => 'form-control', 'placeholder' => __('Enter hire date'), 'type' => 'text']); ?>
         </div>
 
-        <div class="row form-group">
+       <!--  <div class="row form-group">
             <div class="col col-md-3"><label for="hire_date" class="form-control-label"><?= __('Hire Date'); ?></label></div>
             <div class="input-group col-12 col-md-9">
                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                <input class="form-control">
+                <input class="form-control" name="hire_date" id="hire_date" required="true">
             </div>
         </div>
-
+ -->
 
         <div class="row form-group">
-            <div class="col col-md-3"><label for="role" class=" form-control-label"><?= __('Employee Sites') ?></label></div>
+            <div class="col col-md-3"><label for="sites" class=" form-control-label"><?= __('Employee Sites') ?></label></div>
             <?= $this->Form->control('sites._ids', ['options' => $sites, 'label' => false, 'div' => false, 'data-placeholder' => 'Choose sites...', 'multiple' => true, 'class' => 'standardSelect', 'tabindex' => '1']) ?>
         </div>
 
@@ -59,7 +59,7 @@
             <div class="col col-md-9">
                 <div class="form-check-inline form-check">
                     <label for="active" class="form-check-label ">
-                        <input type="checkbox" id="active" name="inline-checkbox1" value="1" class="form-check-input" checked="true">Is Active
+                        <input type="checkbox" id="active" name="active" value="1" class="form-check-input" checked="true">Is Active
                     </label>
                 </div>
             </div>
@@ -82,5 +82,10 @@
             no_results_text: "Oops, nothing found!",
             width: "100%"
         });
+
+        jQuery('#hire-date').datepicker({
+            uiLibrary: 'bootstrap4'
+        });
+    
     });
 </script>
