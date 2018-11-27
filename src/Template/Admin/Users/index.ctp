@@ -18,7 +18,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $i = !empty($this->request->paging['Users']['start']) ? $this->request->paging['Users']['start'] : 1; ?>
+                    <?php $i = !empty($this->request->getParam('paging')['Users']['start']) ? $this->request->getParam('paging')['Users']['start'] : 1; ?>
                     <?php foreach ($users as $user): ?>
                     <tr>
                         <th scope="row"><?= $i++ ?></th>

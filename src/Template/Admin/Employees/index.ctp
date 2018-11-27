@@ -21,7 +21,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $i = !empty($this->request->paging['Employees']['start']) ? $this->request->paging['Employees']['start'] : 1; ?>
+                    <?php $i = !empty($this->request->getParam('paging')['Employees']['start']) ? $this->request->getParam('paging')['Employees']['start'] : 1; ?>
                     <?php foreach ($employees as $employee): ?>
                     <tr>
                         <th scope="row"><?= $i++ ?></th>
