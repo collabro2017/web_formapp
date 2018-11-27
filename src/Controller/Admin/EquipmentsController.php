@@ -12,6 +12,11 @@ use App\Controller\AppController;
  */
 class EquipmentsController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->viewBuilder()->setLayout('admin');
+    }
 
     /**
      * Index method
@@ -22,6 +27,7 @@ class EquipmentsController extends AppController
     {
         $equipments = $this->paginate($this->Equipments);
 
+        $this->set('title', __('All Equipments'));
         $this->set(compact('equipments'));
     }
 
@@ -38,6 +44,7 @@ class EquipmentsController extends AppController
             'contain' => ['Sites']
         ]);
 
+        $this->set('title', __('View Equipment'));
         $this->set('equipment', $equipment);
     }
 
@@ -58,8 +65,11 @@ class EquipmentsController extends AppController
             }
             $this->Flash->error(__('The equipment could not be saved. Please, try again.'));
         }
-        $sites = $this->Equipments->Sites->find('list', ['limit' => 200]);
+        $sites = $this->Equipments->Sites->sitesList();
+
+        $this->set('title', __('Add Equipment'));
         $this->set(compact('equipment', 'sites'));
+        $this->setFixedDatas();
     }
 
     /**
@@ -83,8 +93,11 @@ class EquipmentsController extends AppController
             }
             $this->Flash->error(__('The equipment could not be saved. Please, try again.'));
         }
-        $sites = $this->Equipments->Sites->find('list', ['limit' => 200]);
+        $sites = $this->Equipments->Sites->sitesList();
+
+        $this->set('title', __('Edit Equipment'));
         $this->set(compact('equipment', 'sites'));
+        $this->setFixedDatas();
     }
 
     /**
@@ -105,5 +118,12 @@ class EquipmentsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    // Set static array for fuel type and status
+    private function setFixedDatas() {
+        $statuses = ['In Use' => 'In Use', 'Idle' => 'Idle', 'Broken' => 'Broken'];
+        $fuelTypes = ['Gas' => 'Gas', 'Diesel' => 'Diesel', '2T' => '2T'];
+        $this->set(compact('statuses', 'fuelTypes'));
     }
 }

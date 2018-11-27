@@ -86,4 +86,9 @@ class SitesTable extends Table
 
         return $validator;
     }
+
+    // Return list of sites
+    public function sitesList() {
+        return $this->find('list', ['limit' => 200, 'keyField' => 'site_id', 'valueField' => 'site_name']);
+    }
 }

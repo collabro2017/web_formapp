@@ -9,21 +9,28 @@
 
     <div id="main-menu" class="main-menu collapse navbar-collapse">
         <ul class="nav navbar-nav">
-            <li class="active">
+            <li<?= $this->request->getParam('controller') == 'Users' ? ' class="active"' : '' ?>>
                 <a href="<?= $this->Url->build(["controller" => "Users", "action" => "index", "prefix" => 'admin']) ?>"> <i class="menu-icon fa fa-dashboard"></i><?= __('Dashboard') ?> </a>
             </li>
-            <li class="menu-item-has-children dropdown">
-                <a href="<?= $this->Url->build(["controller" => "Sites", "action" => "index", "prefix" => 'admin']) ?>" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i><?= __('Sites') ?></a>
+            <li class="menu-item-has-children dropdown<?= $this->request->getParam('controller') == 'Sites' ? ' active' : '' ?>">
+                <a href="<?= $this->Url->build(["controller" => "Sites", "action" => "index", "prefix" => 'admin']) ?>" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i><?= __('Sites') ?></a>
                 <ul class="sub-menu children dropdown-menu">
-                    <li><i class="fa fa-puzzle-piece"></i><a href="<?= $this->Url->build(["controller" => "Sites", "action" => "index", "prefix" => 'admin']) ?>"><?= __('Site List') ?></a></li>
-                    <li><i class="fa fa-id-badge"></i><a href="<?= $this->Url->build(["controller" => "Sites", "action" => "add", "prefix" => 'admin']) ?>"><?= __('Add Site') ?></a></li>
+                    <li><i class="fa fa-list"></i><a href="<?= $this->Url->build(["controller" => "Sites", "action" => "index", "prefix" => 'admin']) ?>"><?= __('Site List') ?></a></li>
+                    <li><i class="fa fa-plus"></i><a href="<?= $this->Url->build(["controller" => "Sites", "action" => "add", "prefix" => 'admin']) ?>"><?= __('Add Site') ?></a></li>
                 </ul>
             </li>
-            <li class="menu-item-has-children dropdown">
-                <a href="<?= $this->Url->build(["controller" => "Employees", "action" => "index", "prefix" => 'admin']) ?>" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i><?= __('Employees') ?></a>
+            <li class="menu-item-has-children dropdown<?= $this->request->getParam('controller') == 'Employees' ? ' active' : '' ?>">
+                <a href="<?= $this->Url->build(["controller" => "Employees", "action" => "index", "prefix" => 'admin']) ?>" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i><?= __('Employees') ?></a>
                 <ul class="sub-menu children dropdown-menu">
-                    <li><i class="fa fa-puzzle-piece"></i><a href="<?= $this->Url->build(["controller" => "Employees", "action" => "index", "prefix" => 'admin']) ?>"><?= __('Employee List') ?></a></li>
-                    <li><i class="fa fa-id-badge"></i><a href="<?= $this->Url->build(["controller" => "Employees", "action" => "add", "prefix" => 'admin']) ?>"><?= __('Add Employee') ?></a></li>
+                    <li><i class="fa fa-list"></i><a href="<?= $this->Url->build(["controller" => "Employees", "action" => "index", "prefix" => 'admin']) ?>"><?= __('Employee List') ?></a></li>
+                    <li><i class="fa fa-plus"></i><a href="<?= $this->Url->build(["controller" => "Employees", "action" => "add", "prefix" => 'admin']) ?>"><?= __('Add Employee') ?></a></li>
+                </ul>
+            </li>
+            <li class="menu-item-has-children dropdown<?= $this->request->getParam('controller') == 'Equipments' ? ' active' : '' ?>">
+                <a href="<?= $this->Url->build(["controller" => "Equipments", "action" => "index", "prefix" => 'admin']) ?>" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i><?= __('Equipments') ?></a>
+                <ul class="sub-menu children dropdown-menu">
+                    <li><i class="fa fa-list"></i><a href="<?= $this->Url->build(["controller" => "Equipments", "action" => "index", "prefix" => 'admin']) ?>"><?= __('Equipment List') ?></a></li>
+                    <li><i class="fa fa-plus"></i><a href="<?= $this->Url->build(["controller" => "Equipments", "action" => "add", "prefix" => 'admin']) ?>"><?= __('Add Equipment') ?></a></li>
                 </ul>
             </li>
             <li class="menu-item-has-children dropdown">
