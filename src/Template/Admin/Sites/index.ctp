@@ -8,7 +8,7 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th scope="col"><?= $this->Paginator->sort('site_id') ?></th>
+                        <th scope="col"><?= __('Sl #') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('site_name') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('address') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('city') ?></th>
@@ -16,9 +16,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php $i = !empty($this->request->paging['Sites']['start']) ? $this->request->paging['Sites']['start'] : 1; ?>
                     <?php foreach ($sites as $site): ?>
                     <tr>
-                        <th scope="row"><?= $this->Number->format($site->site_id) ?></th>
+                        <th scope="row"><?= $i++ ?></th>
                         <td><?= h($site->site_name) ?></td>
                         <td><?= h($site->address) ?></td>
                         <td><?= h($site->city) ?></td>
@@ -30,16 +31,7 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <?= $this->Paginator->first('<< ' . __('first')) ?>
-                    <?= $this->Paginator->prev('< ' . __('previous')) ?>
-                    <?= $this->Paginator->numbers() ?>
-                    <?= $this->Paginator->next(__('next') . ' >') ?>
-                    <?= $this->Paginator->last(__('last') . ' >>') ?>
-                </ul>
-                <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-            </nav>
+            <?= $this->element('pagination') ?>
         </div>
     </div>
 </div>

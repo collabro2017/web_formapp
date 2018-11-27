@@ -8,7 +8,7 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
+                        <th scope="col"><?= __('Sl #') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('username') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('email') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('role') ?></th>
@@ -18,9 +18,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php $i = !empty($this->request->paging['Users']['start']) ? $this->request->paging['Users']['start'] : 1; ?>
                     <?php foreach ($users as $user): ?>
                     <tr>
-                        <th scope="row"><?= $this->Number->format($user->user_id) ?></th>
+                        <th scope="row"><?= $i++ ?></th>
                         <td><?= h($user->username) ?></td>
                         <td><?= h($user->email) ?></td>
                         <td><?= h($user->role) ?></td>
@@ -35,35 +36,7 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <!-- <nav aria-label="Page navigation example">
-              <ul class="pagination">
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </li>
-              </ul>
-            </nav> -->
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <?= $this->Paginator->first('<< ' . __('first')) ?>
-                    <?= $this->Paginator->prev('< ' . __('previous')) ?>
-                    <?= $this->Paginator->numbers() ?>
-                    <?= $this->Paginator->next(__('next') . ' >') ?>
-                    <?= $this->Paginator->last(__('last') . ' >>') ?>
-                </ul>
-                <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-            </nav>
+            <?= $this->element('pagination') ?>
         </div>
     </div>
 </div>

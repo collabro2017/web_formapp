@@ -8,7 +8,7 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th scope="col"><?= $this->Paginator->sort('employee_id') ?></th>
+                        <th scope="col"><?= __('Sl #') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('first_name') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('last_name') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('second_name') ?></th>
@@ -21,9 +21,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php $i = !empty($this->request->paging['Employees']['start']) ? $this->request->paging['Employees']['start'] : 1; ?>
                     <?php foreach ($employees as $employee): ?>
                     <tr>
-                        <th scope="row"><?= $this->Number->format($employee->employee_id) ?></th>
+                        <th scope="row"><?= $i++ ?></th>
                         <td><?= h($employee->first_name) ?></td>
                         <td><?= h($employee->last_name) ?></td>
                         <td><?= h($employee->second_name) ?></td>
@@ -40,16 +41,7 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <?= $this->Paginator->first('<< ' . __('first')) ?>
-                    <?= $this->Paginator->prev('< ' . __('previous')) ?>
-                    <?= $this->Paginator->numbers() ?>
-                    <?= $this->Paginator->next(__('next') . ' >') ?>
-                    <?= $this->Paginator->last(__('last') . ' >>') ?>
-                </ul>
-                <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-            </nav>
+            <?= $this->element('pagination') ?>
         </div>
     </div>
 </div>
