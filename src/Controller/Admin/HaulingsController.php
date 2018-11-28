@@ -12,6 +12,11 @@ use App\Controller\AppController;
  */
 class HaulingsController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->viewBuilder()->setLayout('admin');
+    }
 
     /**
      * Index method
@@ -25,6 +30,7 @@ class HaulingsController extends AppController
         ];
         $haulings = $this->paginate($this->Haulings);
 
+        $this->set('title', __('Haulings'));
         $this->set(compact('haulings'));
     }
 
@@ -41,6 +47,7 @@ class HaulingsController extends AppController
             'contain' => ['Sites']
         ]);
 
+        $this->set('title', __('View Hauling'));
         $this->set('hauling', $hauling);
     }
 
@@ -53,7 +60,9 @@ class HaulingsController extends AppController
     {
         $hauling = $this->Haulings->newEntity();
         if ($this->request->is('post')) {
-            $hauling = $this->Haulings->patchEntity($hauling, $this->request->getData());
+            $inputs = $this->request->getData();
+            $inputs['hauling_date'] = !empty($inputs['hauling_date']) ? date('Y-m-d', strtotime($inputs['hauling_date'])) : NULL;
+            $hauling = $this->Haulings->patchEntity($hauling, $inputs);
             if ($this->Haulings->save($hauling)) {
                 $this->Flash->success(__('The hauling has been saved.'));
 
@@ -61,7 +70,9 @@ class HaulingsController extends AppController
             }
             $this->Flash->error(__('The hauling could not be saved. Please, try again.'));
         }
-        $sites = $this->Haulings->Sites->find('list', ['limit' => 200]);
+        $sites = $this->Haulings->Sites->sitesList();
+
+        $this->set('title', __('Add Hauling'));
         $this->set(compact('hauling', 'sites'));
     }
 
@@ -78,7 +89,9 @@ class HaulingsController extends AppController
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $hauling = $this->Haulings->patchEntity($hauling, $this->request->getData());
+            $inputs = $this->request->getData();
+            $inputs['hauling_date'] = !empty($inputs['hauling_date']) ? date('Y-m-d', strtotime($inputs['hauling_date'])) : NULL;
+            $hauling = $this->Haulings->patchEntity($hauling, $inputs);
             if ($this->Haulings->save($hauling)) {
                 $this->Flash->success(__('The hauling has been saved.'));
 
@@ -86,7 +99,8 @@ class HaulingsController extends AppController
             }
             $this->Flash->error(__('The hauling could not be saved. Please, try again.'));
         }
-        $sites = $this->Haulings->Sites->find('list', ['limit' => 200]);
+        $sites = $this->Haulings->Sites->sitesList();
+        $this->set('title', __('Edit Hauling'));
         $this->set(compact('hauling', 'sites'));
     }
 

@@ -33,6 +33,13 @@
                     <li><i class="fa fa-plus"></i><a href="<?= $this->Url->build(["controller" => "Equipments", "action" => "add", "prefix" => 'admin']) ?>"><?= __('Add Equipment') ?></a></li>
                 </ul>
             </li>
+            <li class="menu-item-has-children dropdown<?= $this->request->getParam('controller') == 'Haulings' ? ' active' : '' ?>">
+                <a href="<?= $this->Url->build(["controller" => "Haulings", "action" => "index", "prefix" => 'admin']) ?>" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i><?= __('Haulings') ?></a>
+                <ul class="sub-menu children dropdown-menu">
+                    <li><i class="fa fa-list"></i><a href="<?= $this->Url->build(["controller" => "Haulings", "action" => "index", "prefix" => 'admin']) ?>"><?= __('Hauling List') ?></a></li>
+                    <li><i class="fa fa-plus"></i><a href="<?= $this->Url->build(["controller" => "Haulings", "action" => "add", "prefix" => 'admin']) ?>"><?= __('Add Hauling') ?></a></li>
+                </ul>
+            </li>
             <li class="menu-item-has-children dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Tables</a>
                 <ul class="sub-menu children dropdown-menu">

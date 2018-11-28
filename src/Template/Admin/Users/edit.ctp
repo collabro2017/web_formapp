@@ -34,15 +34,7 @@
 
         <div class="row form-group">
             <div class="col col-md-3"><label for="role" class=" form-control-label"><?= __('User Sites') ?></label></div>
-            <?php 
-                $defaultSites = [];
-                if (!empty($user->sites)) {
-                    foreach ($user->sites as $key => $site) {
-                        $defaultSites[] = $site->site_id;
-                    }
-                }
-            ?>
-            <?= $this->Form->control('sites._ids', ['options' => $sites, 'label' => false, 'div' => false, 'data-placeholder' => 'Choose sites...', 'multiple' => true, 'class' => 'standardSelect', 'tabindex' => '1', 'default' => $defaultSites]) ?>
+            <?= $this->Form->control('sites._ids', ['options' => $sites, 'label' => false, 'div' => false, 'data-placeholder' => 'Choose sites...', 'multiple' => true, 'class' => 'standardSelect', 'tabindex' => '1']) ?>
         </div>
         
     </div>
