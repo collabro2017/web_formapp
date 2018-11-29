@@ -12,6 +12,11 @@ use App\Controller\AppController;
  */
 class FuelConsumptionsController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->viewBuilder()->setLayout('admin');
+    }
 
     /**
      * Index method
@@ -23,8 +28,9 @@ class FuelConsumptionsController extends AppController
         $this->paginate = [
             'contain' => ['Equipments']
         ];
-        $fuelConsumptions = $this->paginate($this->FuelConsumptions);
+        $fuelConsumptions = $this->paginate($this->FuelConsumptions, ['limit' => 2]);
 
+        $this->set('title', __('Fuel Consumption List'));
         $this->set(compact('fuelConsumptions'));
     }
 
@@ -41,6 +47,7 @@ class FuelConsumptionsController extends AppController
             'contain' => ['Equipments']
         ]);
 
+        $this->set('title', __('View Fuel Consumption'));
         $this->set('fuelConsumption', $fuelConsumption);
     }
 
@@ -53,7 +60,9 @@ class FuelConsumptionsController extends AppController
     {
         $fuelConsumption = $this->FuelConsumptions->newEntity();
         if ($this->request->is('post')) {
-            $fuelConsumption = $this->FuelConsumptions->patchEntity($fuelConsumption, $this->request->getData());
+            $inputs = $this->request->getData();
+            $inputs['consumption_date'] = !empty($inputs['consumption_date']) ? date('Y-m-d', strtotime($inputs['consumption_date'])) : NULL;
+            $fuelConsumption = $this->FuelConsumptions->patchEntity($fuelConsumption, $inputs);
             if ($this->FuelConsumptions->save($fuelConsumption)) {
                 $this->Flash->success(__('The fuel consumption has been saved.'));
 
@@ -61,7 +70,9 @@ class FuelConsumptionsController extends AppController
             }
             $this->Flash->error(__('The fuel consumption could not be saved. Please, try again.'));
         }
-        $equipments = $this->FuelConsumptions->Equipments->find('list', ['limit' => 200]);
+        $equipments = $this->FuelConsumptions->Equipments->equipmentList();
+
+        $this->set('title', __('Add Fuel Consumption'));
         $this->set(compact('fuelConsumption', 'equipments'));
     }
 
@@ -78,7 +89,9 @@ class FuelConsumptionsController extends AppController
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $fuelConsumption = $this->FuelConsumptions->patchEntity($fuelConsumption, $this->request->getData());
+            $inputs = $this->request->getData();
+            $inputs['consumption_date'] = !empty($inputs['consumption_date']) ? date('Y-m-d', strtotime($inputs['consumption_date'])) : NULL;
+            $fuelConsumption = $this->FuelConsumptions->patchEntity($fuelConsumption, $inputs);
             if ($this->FuelConsumptions->save($fuelConsumption)) {
                 $this->Flash->success(__('The fuel consumption has been saved.'));
 
@@ -86,7 +99,9 @@ class FuelConsumptionsController extends AppController
             }
             $this->Flash->error(__('The fuel consumption could not be saved. Please, try again.'));
         }
-        $equipments = $this->FuelConsumptions->Equipments->find('list', ['limit' => 200]);
+        $equipments = $this->FuelConsumptions->Equipments->equipmentList();
+
+        $this->set('title', __('Edit Fuel Consumption'));
         $this->set(compact('fuelConsumption', 'equipments'));
     }
 

@@ -79,4 +79,9 @@ class EquipmentsTable extends Table
 
         return $validator;
     }
+
+    // Return list of sites
+    public function equipmentList() {
+        return $this->find('list', ['limit' => 200, 'keyField' => 'equipment_id', 'valueField' => 'serial_plate_number']);
+    }
 }
