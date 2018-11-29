@@ -28,7 +28,7 @@ class FuelConsumptionsController extends AppController
         $this->paginate = [
             'contain' => ['Equipments']
         ];
-        $fuelConsumptions = $this->paginate($this->FuelConsumptions, ['limit' => 2]);
+        $fuelConsumptions = $this->paginate($this->FuelConsumptions);
 
         $this->set('title', __('Fuel Consumption List'));
         $this->set(compact('fuelConsumptions'));

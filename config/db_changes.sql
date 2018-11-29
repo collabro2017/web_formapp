@@ -1,0 +1,1 @@
+ALTER TABLE `employees` CHANGE `active` `active` TINYINT(1) NULL DEFAULT NULL;
