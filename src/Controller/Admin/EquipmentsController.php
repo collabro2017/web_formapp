@@ -25,7 +25,7 @@ class EquipmentsController extends AppController
      */
     public function index()
     {
-        $equipments = $this->paginate($this->Equipments);
+        $equipments = $this->paginate($this->Equipments, ['contain' => ['Sites']]);
 
         $this->set('title', __('All Equipments'));
         $this->set(compact('equipments'));

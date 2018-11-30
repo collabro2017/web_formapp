@@ -25,7 +25,8 @@ class EmployeesController extends AppController
      */
     public function index()
     {
-        $employees = $this->paginate($this->Employees);
+        $employees = $this->paginate($this->Employees, ['contain' => ['Sites']]);
+
         $this->set('title', __('Employees List'));
         $this->set(compact('employees'));
     }

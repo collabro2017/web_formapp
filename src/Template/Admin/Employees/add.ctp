@@ -51,7 +51,7 @@
 
         <div class="row form-group">
             <div class="col col-md-3"><label for="sites" class=" form-control-label"><?= __('Employee Sites') ?></label></div>
-            <?= $this->Form->control('sites._ids', ['options' => $sites, 'label' => false, 'div' => false, 'data-placeholder' => 'Choose sites...', 'multiple' => true, 'class' => 'standardSelect', 'tabindex' => '1']) ?>
+            <?= $this->Form->control('sites._ids', ['options' => $sites, 'label' => false, 'div' => false, 'data-placeholder' => 'Choose sites...', 'multiple' => true, 'class' => 'standardSelect', 'tabindex' => '1', 'required' => true]) ?>
         </div>
 
         <div class="row form-group">

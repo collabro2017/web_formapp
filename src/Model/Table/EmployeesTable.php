@@ -88,6 +88,13 @@ class EmployeesTable extends Table
             ->maxLength('phone_number', 20)
             ->allowEmpty('phone_number');
 
+        $validator->add('sites', 'custom', [
+            'rule' => function($value, $context) {
+                return (!empty($value['_ids']) && is_array($value['_ids']));
+            },
+            'message' => 'Please choose at least one site'
+        ]);
+
         return $validator;
     }
 }

@@ -34,7 +34,7 @@
 
         <div class="row form-group">
             <div class="col col-md-3"><label for="role" class=" form-control-label"><?= __('Equipment Sites') ?></label></div>
-            <?= $this->Form->control('sites._ids', ['options' => $sites, 'label' => false, 'div' => false, 'data-placeholder' => 'Choose sites...', 'multiple' => true, 'class' => 'standardSelect', 'tabindex' => '1']) ?>
+            <?= $this->Form->control('sites._ids', ['options' => $sites, 'label' => false, 'div' => false, 'data-placeholder' => 'Choose sites...', 'multiple' => true, 'class' => 'standardSelect', 'tabindex' => '1', 'required' => true]) ?>
         </div>
         
     </div>

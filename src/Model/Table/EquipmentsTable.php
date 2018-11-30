@@ -77,6 +77,13 @@ class EquipmentsTable extends Table
             ->requirePresence('status', 'create')
             ->notEmpty('status');
 
+        $validator->add('sites', 'custom', [
+            'rule' => function($value, $context) {
+                return (!empty($value['_ids']) && is_array($value['_ids']));
+            },
+            'message' => 'Please choose at least one site'
+        ]);
+
         return $validator;
     }
 

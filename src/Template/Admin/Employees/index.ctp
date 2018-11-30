@@ -15,6 +15,7 @@
                         <th scope="col"><?= $this->Paginator->sort('hire_date') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('active') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('phone_number') ?></th>
+                        <th scope="col"><?= __('Sites') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
                         <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -31,6 +32,13 @@
                         <td><?= h($employee->hire_date) ?></td>
                         <td><?= $employee->active ? __('Yes') : __('No') ?></td>
                         <td><?= h($employee->phone_number) ?></td>
+                        <td><?php 
+                            $sites = '';
+                            foreach ($employee->sites as $key => $site) {
+                                $sites .= $site->site_name . ', ';
+                            }
+                            echo rtrim($sites, ', ');
+                        ?></td>
                         <td><?= h($employee->created) ?></td>
                         <td><?= h($employee->modified) ?></td>
                         <td class="actions">

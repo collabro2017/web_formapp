@@ -13,6 +13,7 @@
                         <th scope="col"><?= $this->Paginator->sort('fuel_type') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('category') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('status') ?></th>
+                        <th scope="col"><?= __('Sites') ?></th>
                         <th scope="col" class="actions"><?= __('Actions') ?></th>
                     </tr>
                 </thead>
@@ -25,6 +26,13 @@
                         <td><?= h($equipment->fuel_type) ?></td>
                         <td><?= h($equipment->category) ?></td>
                         <td><?= h($equipment->status) ?></td>
+                        <td><?php 
+                            $sites = '';
+                            foreach ($equipment->sites as $key => $site) {
+                                $sites .= $site->site_name . ', ';
+                            }
+                            echo rtrim($sites, ', ');
+                        ?></td>
                         <td class="actions">
                             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $equipment->equipment_id]) ?>
                             <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $equipment->equipment_id], ['confirm' => __('Are you sure you want to delete # {0}?', $equipment->serial_plate_number)]) ?>
