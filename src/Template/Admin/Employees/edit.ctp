@@ -2,7 +2,7 @@
 <script src="https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js" type="text/javascript"></script>
 <link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <div class="card">
-    <?= $this->Form->create($employee, ['class' => 'form-horizontal']) ?>
+    <?= $this->Form->create($employee, ['class' => 'form-horizontal', 'type' => 'post']) ?>
 
     <?php 
         $this->Form->setTemplates([

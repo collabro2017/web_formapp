@@ -119,4 +119,16 @@ class EmployeesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    /**
+     * Get employees
+     * site_id required
+     * @return employees list
+     */
+    public function ajaxGetEmployees($site_id = null)
+    {
+        $this->autoRender = false;
+        echo json_encode($this->Employees->allEmployeeList($site_id));
+        exit();
+    }
 }

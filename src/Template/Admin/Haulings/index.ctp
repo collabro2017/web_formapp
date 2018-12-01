@@ -14,7 +14,7 @@
                         <th scope="col"><?= $this->Paginator->sort('residual_waste') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('tree_pruning_debris') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('hazardois_waste') ?></th>
-                        <th scope="col"><?= $this->Paginator->sort('site_id') ?></th>
+                        <th scope="col"><?= __('Site') ?></th>
                         <th scope="col" class="actions"><?= __('Actions') ?></th>
                     </tr>
                 </thead>

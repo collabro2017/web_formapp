@@ -1,4 +1,5 @@
 <!-- https://colorlib.com/polygon/sufee/index.html -->
+<?php use Cake\Routing\Router; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +28,10 @@
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+
+    <script>
+        projectBaseUrl = "<?php echo Router::url('/', true); ?>";
+    </script>
     
 
 </head>

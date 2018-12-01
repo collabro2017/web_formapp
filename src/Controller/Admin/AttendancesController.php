@@ -12,6 +12,11 @@ use App\Controller\AppController;
  */
 class AttendancesController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->viewBuilder()->setLayout('admin');
+    }
 
     /**
      * Index method
@@ -25,6 +30,7 @@ class AttendancesController extends AppController
         ];
         $attendances = $this->paginate($this->Attendances);
 
+        $this->set('title', __('All Attendances'));
         $this->set(compact('attendances'));
     }
 
@@ -53,7 +59,9 @@ class AttendancesController extends AppController
     {
         $attendance = $this->Attendances->newEntity();
         if ($this->request->is('post')) {
-            $attendance = $this->Attendances->patchEntity($attendance, $this->request->getData());
+            $inputs = $this->request->getData();
+            $inputs['work_date'] = !empty($inputs['work_date']) ? date('Y-m-d', strtotime($inputs['work_date'])) : NULL;
+            $attendance = $this->Attendances->patchEntity($attendance, $inputs);
             if ($this->Attendances->save($attendance)) {
                 $this->Flash->success(__('The attendance has been saved.'));
 
@@ -61,9 +69,11 @@ class AttendancesController extends AppController
             }
             $this->Flash->error(__('The attendance could not be saved. Please, try again.'));
         }
-        $employees = $this->Attendances->Employees->find('list', ['limit' => 200]);
-        $sites = $this->Attendances->Sites->find('list', ['limit' => 200]);
-        $this->set(compact('attendance', 'employees', 'sites'));
+
+        $this->set('title', __('Add Attendance'));
+        $sites = $this->Attendances->Sites->sitesList();
+        $this->set('types', $this->getTypes());
+        $this->set(compact('attendance', 'sites'));
     }
 
     /**
@@ -79,7 +89,9 @@ class AttendancesController extends AppController
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $attendance = $this->Attendances->patchEntity($attendance, $this->request->getData());
+            $inputs = $this->request->getData();
+            $inputs['work_date'] = !empty($inputs['work_date']) ? date('Y-m-d', strtotime($inputs['work_date'])) : NULL;
+            $attendance = $this->Attendances->patchEntity($attendance, $inputs);
             if ($this->Attendances->save($attendance)) {
                 $this->Flash->success(__('The attendance has been saved.'));
 
@@ -87,9 +99,12 @@ class AttendancesController extends AppController
             }
             $this->Flash->error(__('The attendance could not be saved. Please, try again.'));
         }
-        $employees = $this->Attendances->Employees->find('list', ['limit' => 200]);
-        $sites = $this->Attendances->Sites->find('list', ['limit' => 200]);
-        $this->set(compact('attendance', 'employees', 'sites'));
+
+        $this->set('title', __('Edit Attendance'));
+        $sites = $this->Attendances->Sites->sitesList();
+        $employees = $this->Attendances->Employees->allEmployeeList($attendance->site_id);
+        $this->set('types', $this->getTypes());
+        $this->set(compact('attendance', 'sites', 'employees'));
     }
 
     /**
@@ -111,4 +126,14 @@ class AttendancesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    /**
+     * Return all type return method
+     * private method
+     */
+    public function getTypes()
+    {
+        return ['A' => 'A', 'DO' => 'DO', 'P' => 'P', 'L' => 'L', 'H' => 'H', 'S' => 'S', 'Time' => 'Time'];
+    }
+
 }

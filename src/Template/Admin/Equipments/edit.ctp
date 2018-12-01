@@ -1,5 +1,5 @@
 <div class="card">
-    <?= $this->Form->create($equipment, ['class' => 'form-horizontal']) ?>
+    <?= $this->Form->create($equipment, ['class' => 'form-horizontal', 'type' => 'post']) ?>
 
     <?php 
         $this->Form->setTemplates([

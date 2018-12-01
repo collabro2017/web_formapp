@@ -97,4 +97,22 @@ class EmployeesTable extends Table
 
         return $validator;
     }
+
+    // Return employee list by site_id
+    public function allEmployeeList($site_id = null) {
+        return $this->find('list', [
+                'keyField' => 'employee_id', 'valueField' => function ($row) {
+                    return $row['first_name'] . ' ' . $row['last_name'];
+            }])
+            ->join([
+                'EmployeesSites' => [
+                    'table' => 'employees_sites',
+                    'type' => 'left',
+                    'conditions' => 'Employees.employee_id = EmployeesSites.employee_id'
+                ]
+            ])
+            ->where([
+                'EmployeesSites.site_id' => $site_id
+            ])->toArray();
+    }
 }

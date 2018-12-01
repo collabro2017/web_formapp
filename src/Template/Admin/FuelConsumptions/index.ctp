@@ -11,7 +11,7 @@
                         <th scope="col"><?= __('Sl #') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('consumption_date') ?></th>
                         <th scope="col"><?= $this->Paginator->sort('quantity') ?></th>
-                        <th scope="col"><?= $this->Paginator->sort('equipment_id') ?></th>
+                        <th scope="col"><?= __('Equipment') ?></th>
                         <th scope="col" class="actions"><?= __('Actions') ?></th>
                     </tr>
                 </thead>

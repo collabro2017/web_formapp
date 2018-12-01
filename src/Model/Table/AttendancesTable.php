@@ -70,6 +70,16 @@ class AttendancesTable extends Table
             ->allowEmpty('time_in');
 
         $validator
+            ->scalar('site_id')
+            ->requirePresence('site_id', 'create')
+            ->notEmpty('site_id');
+
+        $validator
+            ->scalar('employee_id')
+            ->requirePresence('employee_id', 'create')
+            ->notEmpty('employee_id');
+
+        $validator
             ->scalar('type')
             ->maxLength('type', 45)
             ->requirePresence('type', 'create')
